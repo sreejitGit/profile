@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+ <!-- Default to light mode -->
+<head>
+    <meta charset="UTF-ordinaire">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sreejit Pillai - Projects</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            opacity: 1; /* Start with opacity 0 for page fade-in effect */
+            min-height: 100vh; /* Ensure body takes full viewport height */
+            position: relative; /* Needed for absolute positioned children to refer to it */
+            overflow-y: auto; /* Allow vertical scrolling for content exceeding viewport height */
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+            display: flex; /* Flexbox to center the main content */
+            flex-direction: column; /* Stack content vertically */
+            align-items: center; /* Center horizontally */
+            justify-content: flex-start; /* Align content to top for scrolling */
+            padding: 1rem; /* Add some padding for smaller screens */
+            padding-top: 5rem; /* Space for fixed header/buttons */
+
+
+            /* Hide scrollbar for Chrome, Safari and Opera */
+            &::-webkit-scrollbar {
+                display: none;
+            }
+            /* Hide scrollbar for IE, Edge and Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+
+        /* Base background element, holds no gradient directly */
+        #gradient-background-container {
+            position: fixed; /* Fixed to viewport */
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1; /* Ensure it's behind all other content except emojis */
+            overflow: hidden; /* Contain the moving gradient layers */
+        }
+
+        /* Individual gradient layers for smooth cross-fade */
+        .gradient-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-attachment: fixed;
+            background-size: 400% 400%; /* Make background larger for animation */
+            animation: gradient-animation 15s linear infinite; /* Continuous gradient movement */
+            transition: opacity 1.5s ease-in-out; /* Smooth opacity transition for theme change */
+        }
+
+        /* Light mode specific gradient */
+        #light-gradient-layer {
+            background-image: linear-gradient(135deg, #F1E7E7, #FFD0C7);
+            opacity: 1; /* Default to visible in light mode */
+        }
+
+        /* Dark mode specific gradient */
+        #dark-gradient-layer {
+            background-image: linear-gradient(135deg, #222831 0%, #222831 70%, #393E46 100%);
+            opacity: 0; /* Default to hidden in light mode */
+        }
+
+        /* Dark mode state: switch opacities */
+        html.dark #light-gradient-layer {
+            opacity: 0;
+        }
+
+        html.dark #dark-gradient-layer {
+            opacity: 1;
+        }
+
+
+        /* Text colors for light and dark modes */
+        .text-content-primary {
+            transition: color 0.8s ease-in-out;
+        }
+
+        html.light .text-content-primary {
+            color: #374151; /* Darker text for light mode (main text) */
+        }
+
+        html.light .text-content-secondary {
+            color: #4b5563; /* Default text for light mode (sub-text) */
+        }
+
+        .text-content-secondary {
+            transition: color 0.8s ease-in-out;
+        }
+
+        html.dark .text-content-primary {
+            color: #F0F8FF; /* Alice Blue for dark mode primary text */
+        }
+
+        html.dark .text-content-secondary {
+            color: #B0C4DE; /* Light Steel Blue for dark mode secondary text */
+        }
+
+        .text-blue-main {
+            transition: color 0.8s ease-in-out;
+        }
+
+        html.light .text-blue-main {
+            color: #2563EB; /* A standard blue for light mode */
+        }
+
+        html.dark .text-blue-main {
+            color: #3B82F6; /* A slightly brighter blue for dark mode */
+        }
+
+        /* Styling for emoji icons (toggle button) */
+        .emoji-icon {
+            font-size: 1.5rem; /* Adjust size as needed */
+            display: inline-block; /* Ensures transform works correctly */
+            transform-origin: center; /* Ensures scaling is from the center */
+        }
+
+        /* Keyframes for continuous gradient background animation - ONE DIRECTIONAL LOOP */
+        @keyframes gradient-animation {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 100% 50%; /* Moves to 100% and loops back to 0% due to infinite */
+            }
+        }
+
+        /* Styling for flying emojis */
+        .flying-emoji {
+            position: absolute;
+            font-size: 1.5rem; /* Scaled down emojis */
+            pointer-events: none; /* Ensures emojis don't block mouse events */
+            opacity: 0; /* Start hidden, fade in during animation */
+            animation-name: fly-across-screen;
+            animation-timing-function: linear;
+            animation-fill-mode: forwards; /* Ensures emoji stays at final state of animation */
+        }
+
+        /* Keyframes for flying emojis from left to right */
+        @keyframes fly-across-screen {
+            0% {
+                transform: translateX(0); /* Starts at its initial 'left' position */
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.7; /* Fade in quickly to 70% opacity */
+            }
+
+            90% {
+                opacity: 0.7; /* Stay at 70% opaque for most of the travel */
+            }
+
+            100% {
+                transform: translateX(calc(100vw + 100px)); /* Fly across entire viewport width + some extra */
+                opacity: 0; /* Fade out at the end */
+            }
+        }
+
+        /* Styles for the blur box behind content */
+        .blur-box {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); /* For Safari support */
+            padding: 1rem; /* p-8 in Tailwind is 2rem */
+            border-radius: 1rem; /* rounded-2xl in Tailwind is 1rem */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+            border: 1px solid;
+            transition: background-color 0.5s ease-in-out, border-color 0.5s ease-in-out; /* Smooth transition for background and border */
+            width: 100%; /* Ensure blur box takes full width of its container */
+            max-width: 90%; /* Limit overall width for readability */
+            margin: 0rem auto; /* Center the box and add vertical margin */
+        }
+
+        /* Light mode specific blur box background */
+        html.light .blur-box {
+            background-color: rgba(255, 255, 255, 0.6); /* Adjusted opacity for glass effect */
+            border-color: rgba(255, 255, 255, 0.3); /* Adjusted border for glass effect */
+        }
+
+        /* Dark mode specific blur box background */
+        html.dark .blur-box {
+            background-color: rgba(0, 0, 0, 0.6); /* Adjusted opacity for glass effect */
+            border-color: rgba(255, 255, 255, 0.2); /* Adjusted border for glass effect */
+        }
+
+        .project-card {
+            display: flex;
+            flex-direction: column;
+            gap: 6rem; /* Increased gap for significantly more space between description and video/image */
+            padding: 2.5rem; /* Increased padding around the entire card */
+            border-radius: 0.75rem; /* rounded-xl */
+            background-color: rgba(255, 255, 255, 0.4); /* Adjusted opacity for glass effect */
+            backdrop-filter: blur(5px); /* Slightly less blur than main box */
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.4); /* Adjusted border for glass effect */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+            margin-bottom: 2rem; /* mb-8 */
+            transition: background-color 0.5s ease-in-out, border-color 0.5s ease-in-out, transform 0.3s ease-in-out; /* Added transform transition */
+            width: 100%; /* Ensure project card takes full available width */
+        }
+
+        html.dark .project-card {
+            background-color: rgba(0, 0, 0, 0.4); /* Adjusted opacity for glass effect */
+            border-color: rgba(255, 255, 255, 0.25); /* Adjusted border for glass effect */
+        }
+
+        .project-card:hover {
+            transform: scale(1.03); /* Scale up on hover */
+        }
+
+        @media (min-width: 768px) { /* md breakpoint */
+            .project-card {
+                flex-direction: row; /* md:flex-row */
+                align-items: center;
+            }
+        }
+
+        /* Fade-in animation for content elements */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        /* Utility class for initial hidden state */
+        .initial-hidden {
+            opacity: 0;
+        }
+
+        /* Common class for fast, bouncy transform transitions */
+        .fast-bouncy-transition {
+            transition: transform 0.35s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Increased duration to 0.35s */
+        }
+
+        /* Hover effect with custom transform values */
+        .hover\:scale-110-bouncy:hover {
+            transform: scale(1.1) translateY(-3px); /* Scale up and slightly lift */
+        }
+        .hover\:scale-125-bouncy:hover {
+            transform: scale(1.35) translateY(-3px); /* Scale up more and slightly lift */
+        }
+
+        /* Continuous bobbing animation for profile picture */
+        @keyframes bob {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-2.5px); } /* Slightly increased vertical movement for subtlety */
+            100% { transform: translateY(0px); }
+        }
+
+        .profile-bob {
+            animation: bob 3s ease-in-out infinite; /* 3 seconds duration, ease-in-out, infinite loop */
+        }
+    </style>
+</head>
+
+
+<body class="min-h-screen relative flex flex-col items-center p-4 sm:p-6 md:p-8">
+    <!-- Dedicated background container for smooth theme transition -->
+    <div id="gradient-background-container">
+        <div id="light-gradient-layer" class="gradient-layer"></div>
+        <div id="dark-gradient-layer" class="gradient-layer"></div>
+    </div>
+
+    <!-- Container for flying emojis - Not strictly needed on projects page but included for consistency if desired -->
+    <div id="emoji-container" class="absolute inset-0 overflow-hidden"></div>
+
+
+    <!-- Toggle Button Container -->
+    <div class="absolute top-4 right-4 z-[9999] transform translateZ(0)">
+        <!-- Very high z-index to ensure visibility -->
+        <button id="theme-toggle" type="button" class="p-2 rounded-full bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 fast-bouncy-transition hover:scale-125-bouncy">
+            <!-- Sun Emoji (for light mode) - this icon is shown when in dark mode -->
+            <span id="light-mode-icon" class="emoji-icon">☀️</span>
+            <!-- Moon Emoji (for dark mode) - this icon is shown when in light mode -->
+            <span id="dark-mode-icon" class="emoji-icon hidden">🌙</span>
+        </button>
+    </div>
+
+    <!-- Back to Home Button (Now a direct child of body for proper fixed positioning) -->
+    <a href="index.html" class="fixed top-4 left-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md fast-bouncy-transition hover:scale-110-bouncy flex items-center z-[9998]">
+        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+        </svg>
+        Back to Home
+    </a>
+        
+    <!-- Portfolio Page Content -->
+    <div id="portfolio-page-content" class="flex flex-col items-center w-full mx-auto z-20 p-4 sm:p-6 md:p-8">
+        <h2 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-blue-main mb-8 text-center text-content-primary">Shipped Projects</h2>
+
+         <!-- Project 1 -->
+         <div class="project-card">
+            <div class="md:w-1/2 text-left" >
+                <div class="flex items-center mb-2">
+                    <img src="ddIcon.png" alt="Project 1 Icon" class="w-32 h-32 mr-3" onerror="this.onerror=null; this.src='https://placehold.co/64x64/FFC0CB/000000?text=Err';" />
+                    <h3 class="text-2xl font-semibold text-content-primary">Detective Dotson<br>Masala Games</h3>
+                </div>
+                <p class="text-content-secondary mt-8"> <!-- Added mt-8 for more top margin -->
+                    An Indian mystery adventure game.
+                    <br>Solve cases, one clue at a time.
+                    <br>Leading the development from prototyping to post launch for Steam, XBOX & Nintendo.
+                </p>
+            </div>
+            <div class="md:w-1/2 flex-shrink-0 relative" style="padding-bottom: 33%; height: 0; overflow: hidden;">
+                <!-- 3:1 aspect ratio container (Height / Width = 1 / 3 = 0.3333...) -->
+                <iframe
+                    src="https://www.youtube.com/embed/99Xmo53Xm2Q?autoplay=0&mute=1"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    class="absolute top-0 left-0 w-full h-full rounded-lg shadow-lg"
+                ></iframe>
+            </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="project-card">
+            <div class="md:w-1/2 text-left">
+                <div class="flex items-center mb-2">
+                    <img src="mathWizardIcon.webp" alt="Project 2 Icon" class="w-32 h-32 mr-3" onerror="this.onerror=null; this.src='https://placehold.co/64x64/ADD8E6/000000?text=Err';" />
+                    <h3 class="text-2xl font-semibold text-content-primary">Math Wizard<br>Tangible Play Osmo | Masala Games</h3>
+                </div>
+                <p class="text-content-secondary mt-8"> <!-- Added mt-8 for more top margin -->
+                    An addition & subtraction adventure!
+                </p>
+            </div>
+            <div class="md:w-1/2 flex-shrink-0 relative" style="padding-bottom: 33%; height: 0; overflow: hidden;">
+                <!-- 3:1 aspect ratio container -->
+                <iframe
+                    src="https://www.youtube.com/embed/W5H9SFyPGpI?autoplay=0&start=90&mute=1"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    class="absolute top-0 left-0 w-full h-full rounded-lg shadow-lg"
+                ></iframe>
+            </div>
+        </div>
+
+        <!-- Project 3 -->
+         <div class="project-card">
+            <div class="md:w-1/2 text-left">
+                <div class="flex items-center mb-2">
+                    <img src="rBoxIcon.webp" alt="Project 3 Icon" class="w-32 h-32 mr-3" onerror="this.onerror=null; this.src='https://placehold.co/64x64/90EE90/000000?text=Err';" />
+                    <h3 class="text-2xl font-semibold text-content-primary">Reading Adventure<br>Tangible Play Osmo | Masala Games</h3>
+                </div>
+                <p class="text-content-secondary mt-8"> <!-- Added mt-8 for more top margin -->
+                    An early reading adventure game!
+                </p>
+            </div>
+            <div class="md:w-1/2 flex-shrink-0 relative" style="padding-bottom: 33%; height: 0; overflow: hidden;">
+                <!-- 3:1 aspect ratio container -->
+                <iframe
+                    src="https://www.youtube.com/embed/CkC1fZpnGxU?autoplay=0&start=77&mute=1"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    class="absolute top-0 left-0 w-full h-full rounded-lg shadow-lg"
+                ></iframe>
+            </div>
+        </div>
+
+        <!-- Project 4 -->
+        <div class="project-card">
+            <div class="md:w-1/2 text-left">
+                <div class="flex items-center mb-2">
+                    <img src="lumosIcon.webp" alt="Project 4 Icon" class="w-32 h-32 mr-3" onerror="this.onerror=null; this.src='https://placehold.co/64x64/FFD700/000000?text=Err';" />
+                    <h3 class="text-2xl font-semibold text-content-primary">Cocos Creator Game Developer<br>Lumosity | Masala Games</h3>
+                </div>
+                <p class="text-content-secondary mt-8"> <!-- Added mt-8 for more top margin -->
+                    <br><b>Trouble Brewing</b> - Divided Attention
+                    <br><b>Memory Match Overdrive</b> - Working Memory
+                    <br><b>Word Bubbles</b> - Verbal Fluency
+                    <br><b>Pirate Passage</b> - Planning
+                    <br><b>Highway Hazards</b> - Information Processing
+                    <br><b>Tidal Treasures</b> - Working Memory
+                </p>
+            </div>
+            <div class="md:w-1/2 flex-shrink-0 relative" style="padding-bottom: 33%; height: 0; overflow: hidden;">
+                <!-- 3:1 aspect ratio container -->
+                <iframe
+                    src="https://www.youtube.com/embed/-cOSv6rhD2c?autoplay=0&mute=1"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    class="absolute top-0 left-0 w-full h-full rounded-lg shadow-lg"
+                ></iframe>
+            </div>
+        </div>
+
+        <!-- Project 5 -->
+        <div class="project-card">
+            <div class="md:w-1/2 text-left">
+                <div class="flex items-center mb-2">
+                    <img src="yudi.png" alt="Project 5 Icon" class="w-32 h-32 mr-3" onerror="this.onerror=null; this.src='https://placehold.co/64x64/DDA0DD/000000?text=Err';" />
+                    <h3 class="text-2xl font-semibold text-content-primary">Junior Unity Game Developer<br>Yudiz Solutions.</h3>
+                </div>
+                <p class="text-content-secondary mt-8"> <!-- Added mt-8 for more top margin -->
+                    OUTRAGEOUS FANTASY LOTTO (multiplayer board game).
+                    <br><b>BALLZ</b> by KETCHAPP.
+                    <br>Worked on 5+ hyper-casual games.
+                </p>
+            </div>
+            <div class="md:w-1/2 flex-shrink-0 relative" style="padding-bottom: 33%; height: 0; overflow: hidden;">
+                <!-- 3:1 aspect ratio container -->
+                <iframe
+                    src="https://www.youtube.com/embed/QrQ4Wj8KWkg?autoplay=0&mute=1"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    class="absolute top-0 left-0 w-full h-full rounded-lg shadow-lg"
+                ></iframe>
+            </div>
+        </div>
+
+    </div>
+
+    <script>const themeToggleBtn = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement; // This refers to the <html> tag
+        const lightModeIcon = document.getElementById('light-mode-icon'); // The sun emoji
+        const darkModeIcon = document.getElementById('dark-mode-icon');   // The moon emoji
+        const emojiContainer = document.getElementById('emoji-container');
+        const lightGradientLayer = document.getElementById('light-gradient-layer');
+        const darkGradientLayer = document.getElementById('dark-gradient-layer');
+
+        // Original EMOJIS array (can be removed from projects.html if flying emojis are not desired on this page)
+        const EMOJIS = [
+            '✨', '⭐', '💡', '🌈', '🚀', '🌟', '💫',
+            '🎮', '🕹️', '💻', '🖥️', '🎧', '🖱️', '⌨️',
+            '🎲', '🏆', '🔥', '⚔️', '🛡️', '👾', '💥',
+            '🧠', '🌀'
+        ]; // Fun emojis to fly around
+
+        // Set to track currently visible emojis to avoid duplicates (as much as possible)
+        const activeEmojis = new Set();
+
+        // Function to set the theme based on preference
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                htmlElement.classList.add('dark');
+                htmlElement.classList.remove('light');
+                localStorage.setItem('theme', 'dark');
+                // As per user request, swap icons: show sun for dark mode, hide moon
+                lightModeIcon.classList.remove('hidden'); // Show sun
+                darkModeIcon.classList.add('hidden');     // Hide moon
+            } else {
+                htmlElement.classList.remove('dark');
+                htmlElement.classList.add('light');
+                localStorage.setItem('theme', 'light');
+                // As per user request, swap icons: show moon for light mode, hide sun
+                lightModeIcon.classList.add('hidden');    // Hide sun
+                darkModeIcon.classList.remove('hidden');  // Show moon
+            }
+        }
+
+        // Function to create and animate a single emoji (can be removed if not desired on projects page)
+        function createEmoji() {
+            const emoji = document.createElement('span');
+            emoji.classList.add('flying-emoji');
+
+            let chosenEmoji;
+            // Filter out emojis that are currently active
+            const availableEmojis = EMOJIS.filter(e => !activeEmojis.has(e));
+
+            if (availableEmojis.length > 0) {
+                // If there are unique emojis available, pick one randomly
+                chosenEmoji = availableEmojis[Math.floor(Math.random() * availableEmojis.length)];
+            } else {
+                // Fallback: if all unique emojis are currently in flight, pick any random one
+                // This means a temporary duplicate might appear if the screen is saturated
+                chosenEmoji = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
+            }
+
+            emoji.innerHTML = chosenEmoji;
+            activeEmojis.add(chosenEmoji); // Add chosen emoji to the active set
+
+            // Set random initial position (off-screen left)
+            emoji.style.left = '-50px'; // Start slightly off-screen left
+            // Set random vertical starting position within the viewport height
+            emoji.style.top = `${Math.random() * window.innerHeight}px`;
+
+            // Set random animation duration for varied speed
+            const duration = Math.random() * 5 + 3; // Emojis travel faster: 3 to 8 seconds
+            emoji.style.animationDuration = `${duration}s`;
+
+            emojiContainer.appendChild(emoji);
+
+            // Remove emoji from the active set when its animation ends
+            emoji.addEventListener('animationend', () => {
+                activeEmojis.delete(chosenEmoji); // Remove emoji from active set
+                emoji.remove();
+            });
+        }
+
+        // Check for saved theme preference on load
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            setTheme(savedTheme);
+        } else {
+            // Default to light mode if no preference is found
+            // Check system preference if available
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                setTheme('dark');
+            } else {
+                setTheme('light');
+            }
+        }
+
+        // Add event listener for the toggle button
+        themeToggleBtn.addEventListener('click', () => {
+            if (htmlElement.classList.contains('dark')) {
+                setTheme('light');
+            } else {
+                setTheme('dark');
+            }
+        });
+
+        // Generate flying emojis continuously (if emoji-container is present on this page)
+        // Only start if emojiContainer element exists, prevents errors if removed
+        if (emojiContainer) {
+            setInterval(createEmoji, 250); // Create a new emoji every 0.25 seconds
+        }
+
+        // JavaScript to trigger animations after the page loads (if any elements are animated)
+        window.onload = function() {
+            // No specific animations for projects page content unless added later.
+            // This function can be modified or removed if no animations are intended for this page.
+        };
+    </script>
+</body>
+</html>
