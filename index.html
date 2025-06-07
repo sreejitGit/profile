@@ -2,7 +2,6 @@
 <html lang="en" class="light">
  <!-- Default to light mode -->
 <head>
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <meta charset="UTF-ordinaire">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sreejit Pillai</title>
@@ -278,28 +277,26 @@
         <div id="dark-gradient-layer" class="gradient-layer"></div>
     </div>
 
-    <!-- Container for flying emojis -->
-    <div id="emoji-container" class="absolute inset-0 overflow-hidden"></div>
+    <!-- Container for flying emojis - Changed to fixed position -->
+    <div id="emoji-container" class="fixed inset-0 overflow-hidden"></div>
 
-
-    <!-- Toggle Button Container -->
-    <div class="absolute top-4 right-4 z-[9999] transform translateZ(0)">
-        <!-- Very high z-index to ensure visibility -->
-        <button id="theme-toggle" type="button" class="p-2 rounded-full bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 fast-bouncy-transition hover:scale-125-bouncy">
-            <!-- Sun Emoji (for light mode) - this icon is shown when in dark mode -->
-            <span id="light-mode-icon" class="emoji-icon">☀️</span>
-            <!-- Moon Emoji (for dark mode) - this icon is shown when in light mode -->
-            <span id="dark-mode-icon" class="emoji-icon hidden">🌙</span>
-        </button>
-    </div>
 
     <!-- Home Page Content -->
-    <div id="home-page-content" class="flex flex-col items-center text-center max-w-5xl mx-auto z-20 blur-box">
+    <div id="home-page-content" class="flex flex-col items-center text-center max-w-5xl mx-auto z-20 blur-box relative">
+        <!-- Toggle Button Container - NOW INSIDE THE BLUR BOX -->
+        <div class="absolute top-4 right-4 z-[9999]">
+            <button id="theme-toggle" type="button" class="p-2 rounded-full bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 fast-bouncy-transition hover:scale-125-bouncy">
+                <!-- Sun Emoji (for light mode) - this icon is shown when in dark mode -->
+                <span id="light-mode-icon" class="emoji-icon">☀️</span>
+                <!-- Moon Emoji (for dark mode) - this icon is shown when in light mode -->
+                <span id="dark-mode-icon" class="emoji-icon hidden">🌙</span>
+            </button>
+        </div>
         <!-- Circular Profile Image in the center -->
         <img src="IMG_2865_Original.png"
              alt="Profile Image"
              onerror="this.onerror=null; this.src='https://placehold.co/150x150/CCCCCC/000000?text=Error';"
-             class="rounded-full w-80 h-80 object-cover border-2 border-white shadow-lg mb-4 profile-bob"
+             class="rounded-full w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 object-cover border-2 border-white shadow-lg mb-4 profile-bob"
              style="image-rendering: -webkit-optimize-contrast;">
 
         <!-- Combined Action Buttons and Social Icons -->
@@ -348,30 +345,30 @@
 <main class="flex-grow px-4">
     <div class="max-w-4xl mx-auto text-center p-8 md:p-12 rounded-xl shadow-xl transform scale-70 transition duration-500 ease-in-out blur-box">
         <!-- New introductory text added here -->
-        <h2 class="text-5xl md:text-6xl font-bold text-content-primary mb-2 initial-hidden" id="intro-h2">Hello, I am <span class="bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text">Sreejit Pillai</span></h2>
-        <p class="text-2xl md:text-2xl text-content-secondary font-medium mb-8 whitespace-nowrap initial-hidden" id="intro-p1">
+        <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold text-content-primary mb-2 initial-hidden" id="intro-h2">Hello, I am <span class="bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text">Sreejit Pillai</span></h2>
+        <p class="text-lg sm:text-xl md:text-2xl text-content-secondary font-medium mb-8 initial-hidden" id="intro-p1">
             <span class="font-bold bg-gradient-to-r from-teal-400 to-cyan-500 text-transparent bg-clip-text">GAME DEVELOPER</span> |
             <span class="bg-gradient-to-r from-green-400 to-lime-500 text-transparent bg-clip-text">METICULOUS</span> |
             <span class="bg-gradient-to-r from-red-400 to-orange-500 text-transparent bg-clip-text">PASSIONATE</span> |
             <span class="bg-gradient-to-r from-indigo-400 to-pink-500 text-transparent bg-clip-text">RESULTS DRIVEN</span>
         </p>
         <!-- Existing content now with initial-hidden class and unique IDs for staggered animation -->
-        <p class="text-2xl md:text-2xl font-semibold text-content-primary leading-relaxed initial-hidden" id="intro-p2">
+        <p class="text-base sm:text-lg md:text-2xl font-semibold text-content-primary leading-relaxed initial-hidden" id="intro-p2">
             Developing games using <span class="font-bold bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text">Unity and Cocos Creator</span> since 2015.
         </p>
 
         <!-- Each line is now a separate paragraph for individual animation -->
-        <p class="text-xl md:text-xl font-medium text-content-secondary leading-loose initial-hidden" id="intro-p3">
+        <p class="text-sm sm:text-base md:text-xl font-medium text-content-secondary leading-loose initial-hidden" id="intro-p3">
             Driven by a love for crafting <span class="font-semibold bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text">fun and meaningful experiences</span> for the masses.
         </p>
-        <p class="text-xl md:text-xl font-medium text-content-secondary leading-loose initial-hidden" id="intro-p4">
+        <p class="text-sm sm:text-base md:text-xl font-medium text-content-secondary leading-loose initial-hidden" id="intro-p4">
             Shipped <span class="font-semibold bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text">dozens of engaging, high-performance games</span> across iOS, Android, & PC.
         </p>
-        <p class="text-xl md:text-xl font-medium text-content-secondary leading-loose initial-hidden" id="intro-p5">
+        <p class="text-sm sm:text-base md:text-xl font-medium text-content-secondary leading-loose initial-hidden" id="intro-p5">
             Collaborating across teams to design <span class="font-semibold bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text">fun and robust gameplay systems.</span>
         </p>
        
-        <p class="text-xl md:text-xl font-medium text-content-secondary leading-loose initial-hidden" id="intro-p6">
+        <p class="text-sm sm:text-base md:text-xl font-medium text-content-secondary leading-loose initial-hidden" id="intro-p6">
             Eager to create <span class="font-semibold bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text">memorable games</span> that will resonate with players of all ages.
         </p>
     </div>
@@ -388,7 +385,7 @@
         // Original EMOJIS array
         const EMOJIS = [
             '✨', '⭐', '💡', '🌈', '🚀', '🌟', '💫',
-            '�', '🕹️', '💻', '🖥️', '🎧', '🖱️', '⌨️',
+            '🎮', '🕹️', '�', '🖥️', '🎧', '🖱️', '⌨️',
             '🎲', '🏆', '🔥', '⚔️', '🛡️', '👾', '💥',
             '🧠', '🌀'
         ]; // Fun emojis to fly around
