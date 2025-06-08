@@ -5,6 +5,9 @@
     <meta charset="UTF-ordinaire">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sreejit Pillai</title>
+    <!-- Favicon links for cross-browser compatibility -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <!-- Tailwind CSS CDN for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -383,12 +386,15 @@
         const darkGradientLayer = document.getElementById('dark-gradient-layer');
 
         // Original EMOJIS array
-        const EMOJIS = [
-            '✨', '⭐', '💡', '🌈', '🚀', '🌟', '💫',
-            '🎮', '🕹️', '�', '🖥️', '🎧', '🖱️', '⌨️',
-            '🎲', '🏆', '🔥', '⚔️', '🛡️', '👾', '💥',
-            '🧠', '🌀'
-        ]; // Fun emojis to fly around
+          const EMOJIS = [
+                '✨', '⭐', '💡', '�', '🚀', '🌟', '💫',
+                '🎮', '🕹️', '💻', '🖥️', '🎧', '🖱️', '⌨️',
+                '🎲', '🏆', '🔥', '⚔️', '🛡️', '👾', '💥',
+                '🧠', '🌀',
+                '👨‍💻', '👩‍💻', '🤖', '🧩', '🔗', '🌐', '📊',
+                '📈', '💡', '🧪', '🐞', '🔒', '🔑', '💬',
+                '🛠️', '⚙️', '⚡', '🎵', '🎨', '📐'
+            ]; // Fun emojis to fly around
 
         // Set to track currently visible emojis to avoid duplicates (as much as possible)
         const activeEmojis = new Set();
