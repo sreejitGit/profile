@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sreejit Pillai - Projects</title>
     <!-- Favicon links for cross-browser compatibility -->
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="src/Misc/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="src/Misc/favicon.ico" type="image/x-icon">
     <!-- Tailwind CSS CDN for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- New font link for Roboto Mono -->
@@ -260,35 +260,127 @@
             animation: bob 3s ease-in-out infinite; /* 3 seconds duration, ease-in-out, infinite loop */
         }
 
-        /* Responsive aspect ratio for iframes */
-        .video-responsive-container {
+        /* Responsive aspect ratio for iframes and image placeholders */
+        .media-responsive-container {
             position: relative;
             padding-bottom: 56.25%; /* 16:9 Aspect Ratio for mobile first (56.25 = 9/16 * 100) */
             height: 0;
             overflow: hidden;
             width: 100%; /* Ensure it takes full width of its parent */
+            border-radius: 0.5rem; /* rounded-lg, consistent with iframes */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-lg, consistent with iframes */
+            cursor: pointer; /* Indicate clickable area */
         }
 
-        .video-responsive-container iframe {
+        .media-responsive-container iframe {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             border-radius: 0.5rem; /* rounded-lg */
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-lg */
+            display: none; /* Initially hide iframes */
         }
 
+        .media-responsive-container img.placeholder-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 0.5rem;
+            object-fit: cover; /* Ensures image covers the container */
+            display: block; /* Initially show placeholder images */
+        }
+
+        .play-button-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+            border-radius: 0.5rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .play-button-overlay:hover {
+            background-color: rgba(0, 0, 0, 0.7); /* Darker on hover */
+        }
+
+        .play-button-icon {
+            width: 64px;
+            height: 64px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease;
+        }
+
+        .play-button-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .play-button-icon svg {
+            fill: #3B82F6; /* Blue play icon */
+        }
+
+
         @media (min-width: 768px) { /* md breakpoint */
-            .video-responsive-container {
+            .media-responsive-container {
                 padding-bottom: 33%; /* Approximately 3:1 aspect ratio for larger screens (33 = 1/3 * 100) */
             }
+        }
+
+        /* Loading Screen Styles */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #f0f8ff; /* Light background for light mode */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000; /* Ensure it's above everything */
+            opacity: 1;
+            transition: opacity 0.5s ease-out; /* Smooth fade-out effect */
+        }
+
+        html.dark #loading-screen {
+            background-color: #222831; /* Dark background for dark mode */
+        }
+
+        #loading-spinner {
+            border: 4px solid #f3f3f3; /* Light grey */
+            border-top: 4px solid #3B82F6; /* Blue */
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 
 
 <body class="min-h-screen relative flex flex-col items-center p-4 sm:p-6 md:p-8">
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div id="loading-spinner"></div>
+    </div>
+
     <!-- Dedicated background container for smooth theme transition -->
     <div id="gradient-background-container">
         <div id="light-gradient-layer" class="gradient-layer"></div>
@@ -312,11 +404,11 @@
         <h2 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-blue-main pt-24 mb-8 text-center text-content-primary">Shipped Projects</h2>
 
         <!-- Project Cards -->
-        <!-- Project 1 -->
+        <!-- Project 1 (with iframe video directly visible) -->
         <div class="project-card">
             <div class="md:w-1/2 text-left" >
                 <div class="flex items-center mb-2">
-                    <img src="ddIcon.png" alt="Project 1 Icon" class="w-32 h-32 mr-3" onerror="this.onerror=null; this.src='https://placehold.co/64x64/FFC0CB/000000?text=Err';" />
+                    <img src="src/Misc/ddIcon.png" alt="Project 1 Icon" class="w-32 h-32 mr-3" onerror="this.onerror=null; this.src='https://placehold.co/64x64/FFC0CB/000000?text=Err';" />
                     <h3 class="text-2xl font-semibold text-content-primary">Detective Dotson<br>Masala Games</h3>
                 </div>
                 <p class="text-content-secondary mt-8">
@@ -326,72 +418,95 @@
                 </p>
                 <!-- Steam Icon for Project 1 - Moved below the paragraph, now an image -->
                 <a href="https://store.steampowered.com/app/2450840/Detective_Dotson/" target="_blank" rel="noopener noreferrer" class="mt-4 inline-block fast-bouncy-transition hover:scale-105-bouncy">
-                    <img src="steamIcon.png" alt="Steam Icon" class="w-32 h-32" onerror="this.onerror=null; this.src='https://placehold.co/32x32/cccccc/000000?text=Error';" />
+                    <img src="src/Misc/steamIcon.png" alt="Steam Icon" class="w-32 h-32" onerror="this.onerror=null; this.src='https://placehold.co/32x32/cccccc/000000?text=Error';" />
                 </a>
             </div>
-            <div class="md:w-1/2 flex-shrink-0 video-responsive-container">
+            <div class="md:w-1/2 flex-shrink-0 media-responsive-container">
                 <iframe
+                    data-src="https://www.youtube.com/embed/99Xmo53Xm2Q?autoplay=1&mute=1"
                     src="https://www.youtube.com/embed/99Xmo53Xm2Q?autoplay=0&mute=1"
                     frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen
+                    style="display: block;"
                 ></iframe>
+                <!-- No overlay for the first video as it's always visible -->
             </div>
         </div>
 
-        <!-- Project 2 -->
+        <!-- Project 2 (static image placeholder with play button) -->
         <div class="project-card">
             <div class="md:w-1/2 text-left">
                 <div class="flex items-center mb-2">
-                    <img src="mathWizardIcon.webp" alt="Project 2 Icon" class="w-32 h-32 mr-3" onerror="this.onerror=null; this.src='https://placehold.co/64x64/ADD8E6/000000?text=Err';" />
+                    <img src="src/OsmoMathWizard/mathWizardIcon.webp" alt="Project 2 Icon" class="w-32 h-32 mr-3" onerror="this.onerror=null; this.src='https://placehold.co/64x64/ADD8E6/000000?text=Err';" />
                     <h3 class="text-2xl font-semibold text-content-primary">Math Wizard<br>Tangible Play Osmo | Masala Games</h3>
                 </div>
                 <p class="text-content-secondary mt-8">
                     An addition & subtraction adventure!
                 </p> 
                 <a href="https://apps.apple.com/us/app/osmo-math-wizard/id1470095030" target="_blank" rel="noopener noreferrer" class="mt-4 inline-block fast-bouncy-transition hover:scale-105-bouncy">
-                    <img src="appleStoreIcon.png" alt="Steam Icon" class="w-128 h-16" onerror="this.onerror=null; this.src='https://placehold.co/32x32/cccccc/000000?text=Error';" />
+                    <img src="src/Misc/appleStoreIcon.png" alt="Steam Icon" class="w-128 h-16" onerror="this.onerror=null; this.src='https://placehold.co/32x32/cccccc/000000?text=Error';" />
                 </a>
             </div>
-            <div class="md:w-1/2 flex-shrink-0 video-responsive-container">
+            <div class="md:w-1/2 flex-shrink-0 media-responsive-container">
+                <img src="src/OsmoMathWizard/dragon.png" alt="Math Wizard Static Image" class="placeholder-image">
+                <div class="play-button-overlay">
+                    <div class="play-button-icon">
+                        <svg viewBox="0 0 24 24" class="w-8 h-8">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </div>
+                </div>
                 <iframe
-                    src="https://www.youtube.com/embed/W5H9SFyPGpI?autoplay=0&start=90&mute=1"
+                    data-src="https://www.youtube.com/embed/W5H9SFyPGpI?autoplay=1&start=90&mute=1"
+                    src="about:blank"
                     frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen
+                    style="display: none;"
                 ></iframe>
             </div>
         </div>
 
-        <!-- Project 3 -->
+        <!-- Project 3 (static image placeholder with play button) -->
         <div class="project-card">
             <div class="md:w-1/2 text-left">
                 <div class="flex items-center mb-2">
-                    <img src="rBoxIcon.webp" alt="Project 3 Icon" class="w-32 h-32 mr-3" onerror="this.onerror=null; this.src='https://placehold.co/64x64/90EE90/000000?text=Err';" />
+                    <img src="src//OsmoReadingAdventure/rBoxIcon.webp" alt="Project 3 Icon" class="w-32 h-32 mr-3" onerror="this.onerror=null; this.src='https://placehold.co/64x64/90EE90/000000?text=Err';" />
                     <h3 class="text-2xl font-semibold text-content-primary">Reading Adventure<br>Tangible Play Osmo | Masala Games</h3>
                 </div>
                 <p class="text-content-secondary mt-8">
                     An early reading adventure game!
                 </p>
                 <a href="https://apps.apple.com/us/app/osmo-reading-adventure/id1512827122" target="_blank" rel="noopener noreferrer" class="mt-4 inline-block fast-bouncy-transition hover:scale-105-bouncy">
-                    <img src="appleStoreIcon.png" alt="Steam Icon" class="w-128 h-16" onerror="this.onerror=null; this.src='https://placehold.co/32x32/cccccc/000000?text=Error';" />
+                    <img src="src/Misc/appleStoreIcon.png" alt="Steam Icon" class="w-128 h-16" onerror="this.onerror=null; this.src='https://placehold.co/32x32/cccccc/000000?text=Error';" />
                 </a>
             </div>
-            <div class="md:w-1/2 flex-shrink-0 video-responsive-container">
+            <div class="md:w-1/2 flex-shrink-0 media-responsive-container">
+                <img src="src/OsmoReadingAdventure/rBox.png" alt="Reading Adventure Static Image" class="placeholder-image">
+                <div class="play-button-overlay">
+                    <div class="play-button-icon">
+                        <svg viewBox="0 0 24 24" class="w-8 h-8">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </div>
+                </div>
                 <iframe
-                    src="https://www.youtube.com/embed/CkC1fZpnGxU?autoplay=0&start=77&mute=1"
+                    data-src="https://www.youtube.com/embed/CkC1fZpnGxU?autoplay=1&start=77&mute=1"
+                    src="about:blank"
                     frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen
+                    style="display: none;"
                 ></iframe>
             </div>
         </div>
 
-        <!-- Project 4 -->
+        <!-- Project 4 (static image placeholder with play button) -->
         <div class="project-card">
             <div class="md:w-1/2 text-left">
                 <div class="flex items-center mb-2">
-                    <img src="lumosIcon.webp" alt="Project 4 Icon" class="w-32 h-32 mr-3" onerror="this.onerror=null; this.src='https://placehold.co/64x64/FFD700/000000?text=Err';" />
+                    <img src="src/Lumosity/lumosIcon.webp" alt="Project 4 Icon" class="w-32 h-32 mr-3" onerror="this.onerror=null; this.src='https://placehold.co/64x64/FFD700/000000?text=Err';" />
                     <h3 class="text-2xl font-semibold text-content-primary">Cocos Creator Game Developer<br>Lumosity | Masala Games</h3>
                 </div>
                 <p class="text-content-secondary mt-8">
@@ -403,27 +518,37 @@
                     <br><b>Tidal Treasures</b> - Working Memory
                 </p>
                 <a href="https://apps.apple.com/us/app/lumosity-brain-training/id577232024" target="_blank" rel="noopener noreferrer" class="mt-4 inline-block fast-bouncy-transition hover:scale-105-bouncy">
-                    <img src="appleStoreIcon.png" alt="Steam Icon" class="w-128 h-16" onerror="this.onerror=null; this.src='https://placehold.co/32x32/cccccc/000000?text=Error';" />
+                    <img src="src/Misc/appleStoreIcon.png" alt="Steam Icon" class="w-128 h-16" onerror="this.onerror=null; this.src='https://placehold.co/32x32/cccccc/000000?text=Error';" />
                 </a>
                 <a href="https://play.google.com/store/apps/details?id=com.lumoslabs.lumosity" target="_blank" rel="noopener noreferrer" class="mt-4 inline-block fast-bouncy-transition hover:scale-105-bouncy">
-                    <img src="playStoreIcon.png" alt="Steam Icon" class="w-128 h-16" onerror="this.onerror=null; this.src='https://placehold.co/32x32/cccccc/000000?text=Error';" />
+                    <img src="src/Misc/playStoreIcon.png" alt="Steam Icon" class="w-128 h-16" onerror="this.onerror=null; this.src='https://placehold.co/32x32/cccccc/000000?text=Error';" />
                 </a>
             </div>
-            <div class="md:w-1/2 flex-shrink-0 video-responsive-container">
+            <div class="md:w-1/2 flex-shrink-0 media-responsive-container">
+                <img src="src/Lumosity/troubleBrewing.png" alt="Lumosity Static Image" class="placeholder-image">
+                <div class="play-button-overlay">
+                    <div class="play-button-icon">
+                        <svg viewBox="0 0 24 24" class="w-8 h-8">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </div>
+                </div>
                 <iframe
-                    src="https://www.youtube.com/embed/-cOSv6rhD2c?autoplay=0&mute=1"
+                    data-src="https://www.youtube.com/embed/-cOSv6rhD2c?autoplay=1&mute=1"
+                    src="about:blank"
                     frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen
+                    style="display: none;"
                 ></iframe>
             </div>
         </div>
 
-        <!-- Project 5 -->
+        <!-- Project 5 (static image placeholder with play button) -->
         <div class="project-card">
             <div class="md:w-1/2 text-left">
                 <div class="flex items-center mb-2">
-                    <img src="yudi.png" alt="Project 5 Icon" class="w-32 h-32 mr-3" onerror="this.onerror=null; this.src='https://placehold.co/64x64/DDA0DD/000000?text=Err';" />
+                    <img src="src/Misc/yudi.png" alt="Project 5 Icon" class="w-32 h-32 mr-3" onerror="this.onerror=null; this.src='https://placehold.co/64x64/DDA0DD/000000?text=Err';" />
                     <h3 class="text-2xl font-semibold text-content-primary">Junior Unity Game Developer<br>Yudiz Solutions.</h3>
                 </div>
                 <p class="text-content-secondary mt-8">
@@ -432,18 +557,28 @@
                     <br>Worked on 5+ hyper-casual games.
                 </p>
                 <a href="https://apps.apple.com/us/app/ballz/id1139609950" target="_blank" rel="noopener noreferrer" class="mt-4 inline-block fast-bouncy-transition hover:scale-105-bouncy">
-                    <img src="appleStoreIcon.png" alt="Steam Icon" class="w-128 h-16" onerror="this.onerror=null; this.src='https://placehold.co/32x32/cccccc/000000?text=Error';" />
+                    <img src="src/Misc/appleStoreIcon.png" alt="Steam Icon" class="w-128 h-16" onerror="this.onerror=null; this.src='https://placehold.co/32x32/cccccc/000000?text=Error';" />
                 </a>
                 <a href="https://play.google.com/store/apps/details?id=com.ketchapp.ballz" target="_blank" rel="noopener noreferrer" class="mt-4 inline-block fast-bouncy-transition hover:scale-105-bouncy">
-                    <img src="playStoreIcon.png" alt="Steam Icon" class="w-128 h-16" onerror="this.onerror=null; this.src='https://placehold.co/32x32/cccccc/000000?text=Error';" />
+                    <img src="src/Misc/playStoreIcon.png" alt="Steam Icon" class="w-128 h-16" onerror="this.onerror=null; this.src='https://placehold.co/32x32/cccccc/000000?text=Error';" />
                 </a>
             </div>
-            <div class="md:w-1/2 flex-shrink-0 video-responsive-container">
+            <div class="md:w-1/2 flex-shrink-0 media-responsive-container">
+                <img src="src/Misc/Ballz/Ballz.jpeg" alt="Ballz Static Image" class="placeholder-image">
+                <div class="play-button-overlay">
+                    <div class="play-button-icon">
+                        <svg viewBox="0 0 24 24" class="w-8 h-8">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </div>
+                </div>
                 <iframe
-                    src="https://www.youtube.com/embed/QrQ4Wj8KWkg?autoplay=0&mute=1"
+                    data-src="https://www.youtube.com/embed/QrQ4Wj8KWkg?autoplay=1&mute=1"
+                    src="about:blank"
                     frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen
+                    style="display: none;"
                 ></iframe>
             </div>
         </div>
@@ -452,13 +587,14 @@
     <script>
         const emojiContainer = document.getElementById('emoji-container');
         const htmlElement = document.documentElement; // Get the html element
+        const loadingScreen = document.getElementById('loading-screen');
 
         const EMOJIS = [
-                '✨', '⭐', '💡', '�', '🚀', '🌟', '�',
+                '✨', '⭐', '💡', '�', '🚀', '🌟', '💫',
                 '🎮', '🕹️', '💻', '🖥️', '🎧', '🖱️', '⌨️',
                 '🎲', '🏆', '🔥', '⚔️', '🛡️', '👾', '💥',
                 '🧠', '🌀',
-                '👨‍💻', '👩‍💻', '🤖', '🧩', '🔗', '🌐', '📊',
+                '👨‍�', '👩‍💻', '🤖', '🧩', '🔗', '🌐', '📊',
                 '📈', '💡', '🧪', '🐞', '🔒', '🔑', '💬',
                 '🛠️', '⚙️', '⚡', '🎵', '🎨', '📐'
             ];
@@ -522,8 +658,40 @@
             setInterval(createEmoji, 250);
         }
 
+        // Hide loading screen after 2 seconds
         window.onload = function() {
-            // No specific animations for projects page content unless added later.
+            setTimeout(() => {
+                if (loadingScreen) {
+                    loadingScreen.style.opacity = '0'; // Start fade out
+                    loadingScreen.addEventListener('transitionend', () => {
+                        loadingScreen.style.display = 'none'; // Hide completely after transition
+                    });
+                }
+            }, 1000); // 2 seconds delay
+
+            // Get all media responsive containers for video functionality
+            const mediaContainers = document.querySelectorAll('.media-responsive-container');
+
+            mediaContainers.forEach(container => {
+                const playOverlay = container.querySelector('.play-button-overlay');
+                const placeholderImage = container.querySelector('.placeholder-image');
+                const iframe = container.querySelector('iframe');
+
+                // If a play overlay and iframe exist (i.e., not the first project)
+                if (playOverlay && iframe) {
+                    playOverlay.addEventListener('click', () => {
+                        // Hide the overlay and placeholder image
+                        playOverlay.style.display = 'none';
+                        if (placeholderImage) {
+                            placeholderImage.style.display = 'none';
+                        }
+                        
+                        // Show the iframe and set its src to autoplay the video
+                        iframe.style.display = 'block';
+                        iframe.src = iframe.dataset.src; // Use data-src to load video on demand
+                    });
+                }
+            });
         };
     </script>
 </body>
