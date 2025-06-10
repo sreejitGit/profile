@@ -167,64 +167,6 @@
             }
         }
 
-        /* Styles for the blur box behind content */
-        .blur-box {
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px); /* For Safari support */
-            padding: 1rem; /* p-8 in Tailwind is 2rem */
-            border-radius: 1rem; /* rounded-2xl in Tailwind is 1rem */
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
-            border: 1px solid;
-            transition: background-color 0.5s ease-in-out, border-color 0.5s ease-in-out; /* Smooth transition for background and border */
-            width: 100%; /* Ensure blur box takes full width of its container */
-            max-width: 90%; /* Limit overall width for readability */
-            margin: 0rem auto; /* Center the box and add vertical margin */
-        }
-
-        /* Light mode specific blur box background */
-        html.light .blur-box {
-            background-color: rgba(255, 255, 255, 0.6); /* Adjusted opacity for glass effect */
-            border-color: rgba(255, 255, 255, 0.3); /* Adjusted border for glass effect */
-        }
-
-        /* Dark mode specific blur box background */
-        html.dark .blur-box {
-            background-color: rgba(0, 0, 0, 0.6); /* Adjusted opacity for glass effect */
-            border-color: rgba(255, 255, 255, 0.2); /* Adjusted border for glass effect */
-        }
-
-        .project-card {
-            display: flex;
-            flex-direction: column;
-            gap: 6rem; /* Increased gap for significantly more space between description and video/image */
-            padding: 2.5rem; /* Increased padding around the entire card */
-            border-radius: 0.75rem; /* rounded-xl */
-            background-color: rgba(255, 255, 255, 0.4); /* Adjusted opacity for glass effect */
-            backdrop-filter: blur(5px); /* Slightly less blur than main box */
-            -webkit-backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.4); /* Adjusted border for glass effect */
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
-            margin-bottom: 2rem; /* mb-8 */
-            transition: background-color 0.5s ease-in-out, border-color 0.5s ease-in-out, transform 0.3s ease-in-out; /* Added transform transition */
-            width: 100%; /* Ensure project card takes full available width */
-        }
-
-        html.dark .project-card {
-            background-color: rgba(0, 0, 0, 0.4); /* Adjusted opacity for glass effect */
-            border-color: rgba(255, 255, 255, 0.25); /* Adjusted border for glass effect */
-        }
-
-        .project-card:hover {
-            transform: scale(1.03); /* Scale up on hover */
-        }
-
-        @media (min-width: 768px) { /* md breakpoint */
-            .project-card {
-                flex-direction: row; /* md:flex-row */
-                align-items: center;
-            }
-        }
-
         /* Fade-in animation for content elements */
         @keyframes fadeInUp {
             from {
@@ -285,7 +227,7 @@
 
 
     <!-- Home Page Content -->
-    <div id="home-page-content" class="flex flex-col items-center text-center max-w-5xl mx-auto z-20 blur-box relative">
+    <div id="home-page-content" class="flex flex-col items-center text-center max-w-5xl mx-auto z-20 relative">
         <!-- Toggle Button Container - NOW INSIDE THE BLUR BOX -->
         <div class="absolute top-4 right-4 z-[9999]">
             <button id="theme-toggle" type="button" class="p-2 rounded-full bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 fast-bouncy-transition hover:scale-125-bouncy">
@@ -346,7 +288,7 @@
         </div>
         
 <main class="flex-grow px-4">
-    <div class="max-w-4xl mx-auto text-center p-8 md:p-12 rounded-xl shadow-xl transform scale-70 transition duration-500 ease-in-out blur-box">
+    <div class="max-w-4xl mx-auto text-center">
         <!-- New introductory text added here -->
         <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold text-content-primary mb-2 initial-hidden" id="intro-h2">Hello, I am <span class="bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text">Sreejit Pillai</span></h2>
         <p class="text-lg sm:text-xl md:text-2xl text-content-secondary font-medium mb-8 initial-hidden" id="intro-p1">
